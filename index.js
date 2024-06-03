@@ -31,10 +31,9 @@ async function run() {
         //DoCollection=>>>>>>>>>
         const doCollection = client.db('HotelDB').collection('do')
 
-        //send do data to the server
+        //send "do" data to the server
         app.post('/do', async (req, res) => {
             const newItem = req.body
-            console.log(newItem);
             const result = await doCollection.insertOne(newItem)
             res.send(result)
         })
@@ -44,6 +43,20 @@ async function run() {
             res.send(result)
         })
 
+        //room Collection
+        const roomsCollection = client.db('HotelDB').collection('rooms')
+
+        app.post('/rooms', async (req, res) => {
+            const newRoom = req.body
+            const result = await roomsCollection.insertOne(newRoom)
+            res.send(result)
+
+        })
+        app.get('/rooms', async (req, res) => {
+            const data = roomsCollection.find()
+            const result = await data.toArray()
+            res.send(result)
+        })
 
 
         // Send a ping to confirm a successful connection
