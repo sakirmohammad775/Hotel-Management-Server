@@ -56,6 +56,7 @@ async function run() {
             const data = roomsCollection.find()
             const result = await data.toArray()
             res.send(result)
+            console.log(result);
         })
 
 
