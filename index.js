@@ -62,6 +62,7 @@ async function run() {
         app.get('/rooms/:id', async (req, res) => {
             const id = req.params.id
             const query = { _id: new ObjectId(id) }
+            console.log(query);
             const options = {
                 projection: {customerName:1, price: 1,images:1,room_description:1 },
               };
