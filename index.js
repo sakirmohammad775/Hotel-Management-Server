@@ -56,7 +56,7 @@ async function run() {
             const data = roomsCollection.find()
             const result = await data.toArray()
             res.send(result)
-            console.log(result);
+            
         })
 
         app.get('/rooms/:id', async (req, res) => {
@@ -72,9 +72,15 @@ async function run() {
         })
         //bookings collection
         const bookingsCollection=client.db('HotelDB').collection('bookings')
+        app.get('bookings',async(req,res)=>{
+            console.log(req.query);
+            const result=await bookingsCollection.find().toArray()
+            res.send(result)
+        })
 
         app.post('/bookings',async(req,res)=>{
             const bookings=req.body
+            console.log(bookings);
             const result =await bookingsCollection.insertOne(bookings)
             res.send(result)
         })
