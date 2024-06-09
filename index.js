@@ -70,14 +70,16 @@ async function run() {
             const result=await roomsCollection.findOne(query,options)
             res.send(result)
         })
-
+        //bookings collection
         const bookingsCollection=client.db('HotelDB').collection('bookings')
 
         app.post('/bookings',async(req,res)=>{
-            const rooms=req.body
-            const result =await bookingsCollection.insertOne(rooms)
+            const bookings=req.body
+            const result =await bookingsCollection.insertOne(bookings)
             res.send(result)
         })
+
+        
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
