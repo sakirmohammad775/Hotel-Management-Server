@@ -85,6 +85,7 @@ async function run() {
             const bookings = req.body
             const result = await bookingsCollection.insertOne(bookings)
             res.send(result)
+            console.log(result);
         })
 
         app.delete('/bookings/:id', async (req, res) => {
