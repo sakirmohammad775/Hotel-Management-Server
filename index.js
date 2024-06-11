@@ -56,39 +56,45 @@ async function run() {
             const data = roomsCollection.find()
             const result = await data.toArray()
             res.send(result)
-            
+
         })
 
         app.get('/rooms/:id', async (req, res) => {
             const id = req.params.id
             const query = { _id: new ObjectId(id) }
-            
+
             const options = {
-                projection: {customerName:1, price: 1,images:1,room_description:1 },
-              };
-            const result=await roomsCollection.findOne(query,options)
+                projection: { customerName: 1, price: 1, images: 1, room_description: 1 },
+            };
+            const result = await roomsCollection.findOne(query, options)
             res.send(result)
         })
         //bookings collection
-        const bookingsCollection=client.db('HotelDB').collection('bookings')
-        app.get('/bookings',async(req,res)=>{
+        const bookingsCollection = client.db('HotelDB').collection('bookings')
+        app.get('/bookings', async (req, res) => {
             console.log(req.query.email);
-            let query={}
-            if(req.query?.email){
-                query={email:req.query.email}
+            let query = {}
+            if (req.query?.email) {
+                query = { email: req.query.email }
             }
-            const result=await bookingsCollection.find(query).toArray()
+            const result = await bookingsCollection.find(query).toArray()
             res.send(result)
         })
 
-        app.post('/bookings',async(req,res)=>{
-            const bookings=req.body
-            console.log(bookings);
-            const result =await bookingsCollection.insertOne(bookings)
+        app.post('/bookings', async (req, res) => {
+            const bookings = req.body
+            const result = await bookingsCollection.insertOne(bookings)
             res.send(result)
         })
 
-        
+        app.delete('/bookings/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const result=await bookingsCollection.deleteOne(query)
+            res.send(result)
+        })
+
+
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
