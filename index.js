@@ -71,6 +71,16 @@ async function run() {
         })
         //bookings collection
         const bookingsCollection = client.db('HotelDB').collection('bookings')
+       
+       
+        app.post('/bookings', async (req, res) => {
+            const bookings = req.body
+            const result = await bookingsCollection.insertOne(bookings)
+            res.send(result)
+            
+        })
+       
+       
         app.get('/bookings', async (req, res) => {
             console.log(req.query.email);
             let query = {}
@@ -81,18 +91,17 @@ async function run() {
             res.send(result)
         })
 
-        app.post('/bookings', async (req, res) => {
-            const bookings = req.body
-            const result = await bookingsCollection.insertOne(bookings)
-            res.send(result)
-            
-        })
 
         app.delete('/bookings/:id', async (req, res) => {
             const id = req.params.id
             const query = { _id: new ObjectId(id) }
             const result=await bookingsCollection.deleteOne(query)
             res.send(result)
+        })
+
+        app.patch('/bookings/:id',async(req,res)=>{
+            const updatedBooking=req.body
+            console.log(updatedBooking);
         })
 
 
