@@ -100,7 +100,7 @@ async function run() {
         })
 
         app.patch('/bookings/:id',async(req,res)=>{
-            const id=rq.params.id
+            const id=req.params.id
             const filter={_id: new ObjectId(id)}
             const updatedBooking=req.body
             console.log(updatedBooking);
@@ -109,6 +109,8 @@ async function run() {
                     status:updatedBooking.status
                 }
             }
+            const result=await bookingsCollection.updateOne(filter,updateDoc)
+            res.send(result)
         })
 
 
