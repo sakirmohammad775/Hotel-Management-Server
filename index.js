@@ -111,6 +111,7 @@ async function run() {
             }
             const result=await bookingsCollection.updateOne(filter,updateDoc)
             res.send(result)
+            console.log(result);
         })
 
 
